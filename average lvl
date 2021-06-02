@@ -1,0 +1,31 @@
+#include "pch.h"
+#include <iostream>
+#include<fstream>
+using namespace std;
+ 
+/*Вариант 10 средний уровень*
+Даны символьные файлы f1 и f2,переписать с сохранением порядка следования данные из f1 в f2.Использовать вспомогательный файл h.
+Хочу узнать для чего нужен вспомогательный файл,и как осуществить решение.*/
+
+int main()
+{
+    
+    ofstream output;                  
+    output.open("f1.txt");
+    output << "test" << endl;
+    output << "test2" << endl;
+    output.close();
+ 
+ 
+    ifstream input;                  
+    input.open("f1.txt");
+    char ch;
+    while(input.get(ch))
+    {
+        cout << ch;
+    }
+    ofstream output2;
+    output2.open("f2.txt");
+    output2 << ch;
+    output2.close;
+}
