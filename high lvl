@@ -1,0 +1,109 @@
+#include<iostream>
+#include<string>
+#include<conio.h>
+#include <fstream>
+using namespace std;
+
+/*Вариант 10 высокий уровень*
+"Абитуриет"
+В первом файле хранится k квадратных матриц порядка n , во втором – l квадратных матриц. 
+Если k ≠ l , то в файл с меньшим числом матриц добавить в конец файла недостающее количество единичных матриц. 
+Вывести на экран содержимое первого и второго файлов.*/
+
+ 
+void show(char *fil);
+void createMatrix(char *fil, int amount, int n);
+void add(char* path1, char* path2, int k, int n);
+ 
+int main()
+{
+    int n, m;
+    char fil1[] = "matrix1.txt";
+    char fil2[] = "matrix2.txt";
+    cout << "Enter size (n*n): ";
+    cin >> n;
+    int k, l;
+    cout << "Enter k: ";
+    cin >> k;
+    createMatrix(fil1, k, n);
+    cout << "Enter l:";
+    cin >> l;
+    createMatrix(fil2, l, n);
+    cout << "======================" << endl;
+    if (k < l){
+        add(fil2, fil1, n, l);
+    }
+    else
+    if (l < k){
+        add(fil1, fil2, n, k);
+    }
+    show(fil1);
+    cout << "======================" << endl;
+    show(fil2);
+    system("pause");
+}
+ 
+void createMatrix(char *fil, int amount, int n)
+{
+    fstream file(fil, ios::out | ios::binary | ios::trunc);
+    for (int k = 0; k < amount; k++)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                file << rand() % 2 << " ";
+            }
+            file << "\r\n";
+        }
+        file << "\r\n\r\n";
+    }
+    file.close();
+}
+void add(char* path1, char* path2, int n, int amount)
+{
+    fstream file(path1, ios::in | ios::binary);
+    int temp = 0, l, am = 0, a = 100;
+    char ch, ch1;
+    string str;
+    fstream me(path2, ios::in | ios::out | ios::binary | ios::app);
+    while (!file.eof()) {
+        file.get(ch);
+        if (ch == '\n') am++;
+    }
+    char** arr = new char*[a];
+    for (int i = 0; i < am; i++) {
+        arr[i] = new char[a];
+    }
+    file.clear();
+    file.seekg(0, ios::beg);
+    for (int i = 0, j = 0; i < am; i++) {
+        while (!file.eof())
+        {
+            ch1 = file.get();
+            if (ch1 == '\n') {
+                break;
+            }
+            else arr[i][j] = ch1;
+            j++;
+        }
+        arr[i][j] = '\0';
+        j = 0;
+    }
+    for (int i = amount * 4; i < ((amount + 1) * 4); i++)
+    me << arr[i] << "\r\n";
+    file.close();
+    me.close();
+}
+ 
+void show(char *fil)
+{
+    fstream file(fil, ios::binary | ios::in);
+    char ch;
+    while (!file.eof())
+    {
+        ch = file.get();
+        cout << ch;
+    }
+    file.close();
+}
