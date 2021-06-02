@@ -1,0 +1,60 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+
+/*Вариант 10 базовый уровень*
+"Абитуриет"
+фио, пол, национальность, дата рождения, домашний адресс (индекс), № телефона, оценки по экзаменам, проходной балл.
+ВЫВЕСТИ ДАННЫЕ ПРО АБИТУРЕНТОВ С НАЦИОНАЛЬНОСТЬЮ: УКРАИНЕЦ*/
+
+void task1() 
+{
+    ofstream pop("D:\\enrolle.txt"); //заполнение файла
+    pop << "Enrolles:\nSecond_name, First_name, Last_name, Sex, Nationality, Birthday_Date, Adress, Phone_number, Exam_grades (3), Pass_grade:\nKozakov Dmitry Olegovich, male, ukrainian, 55432, 0634452346, 3 4 4, 4";
+    pop << "\nPetrov ALex Fedorovich, male, ukrainian, 35245, 09745687906, 3 3 5, 4 \nSviridova Viktoria Andreevna, female, russian, 65234, 0985684321, 5 5 5, 5";
+    pop << "\nBotvinteva Vladislava Petrovna, female, american, 86345, 0675431221, 2 3 3, 3\nFilanov Andrew Konstantinovich, russian, 87546, 0635683212, 3 3 4, 3";
+    pop.close();
+}
+void task1_1()
+{
+    string line, ukr = "ukrainian";
+    int a = 0;
+    ifstream pop("D:\\enrolle.txt"); // окрываем файл для чтения
+    ofstream out("D:\\enrolle.txt");
+    out << "\nEnrolles which Pass_grade > 4:\nEnrolles:\nSecond_name, First_name, Last_name, Sex, Nationality, Birthday_Date, Adress, Phone_number, Exam_grades (3), Pass_grade :" << endl;
+    if (pop.is_open())
+    {
+        while (getline(pop, line))
+        {
+            cout << "\n" << line;
+            for (int i = 0; i < line.length(); i++)
+            {
+                for (int u = 0; u < ukr.length() - 1; u++)
+                {                                      //поиск слова Odessa
+                    if (line[i] == ukr[u] && line[i + 1] == ukr[u + 1] && a < ukr.length())
+                    {
+                        a++;
+                    }
+                }
+            }
+
+        }
+    }
+    out.close();
+    pop.close();     // закрываем файл
+}
+void task1_2() 
+{
+    ifstream out("D:\\enrolle.txt");
+    string line;
+    if (out.is_open())
+    {
+        while (getline(out, line))
+        {
+            cout << line << std::endl;
+        }
+    }
+    out.close();
+}
